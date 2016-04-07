@@ -2,4 +2,4 @@ dependencies:
   pre:
     - sudo apt-get update
     - sudo apt-get install ifupdown
-    - sudo apt-get install meld
+    - sudo apt-get install meld || true
