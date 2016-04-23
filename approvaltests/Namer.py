@@ -38,5 +38,11 @@ class Namer(object):
     def set_for_stack(self, caller):
         stacktrace = caller[self.frame]
         self.MethodName = stacktrace[3]
-        self.ClassName = stacktrace[0].f_locals["self"].__class__.__name__
+        try:
+            self.ClassName = stacktrace[0].f_locals["self"].__class__.__name__
+        except KeyError:
+            # We are inside a function, not a class. Use the name of
+            # the function instead of the class name.
+            self.ClassName = stacktrace[0].f_code.co_name
+            #self.ClassName = ''
         self.Directory = os.path.dirname(stacktrace[1])
