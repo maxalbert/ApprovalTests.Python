@@ -5,9 +5,9 @@ from approvaltests.ReceivedFileLauncherReporter import ReceivedFileLauncherRepor
 from approvaltests.StringWriter import StringWriter
 
 
-def verify(data, reporter=ReceivedFileLauncherReporter()):
+def verify(data, reporter=ReceivedFileLauncherReporter(), methodname=None):
     approver = FileApprover()
-    namer = Namer(2)
+    namer = Namer(2, methodname=methodname)
     writer = StringWriter(data)
 
     error = approver.verify(namer, writer, reporter)

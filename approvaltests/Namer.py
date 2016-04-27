@@ -10,9 +10,10 @@ class Namer(object):
     APPROVED = '.approved'
     RECEIVED = '.received'
 
-    def __init__(self, frame=1, extension='.txt'):
+    def __init__(self, frame=1, extension='.txt', methodname=None):
         self.extension_with_dot = extension
         self.frame = frame
+        self.MethodName = methodname
         self.set_for_stack(inspect.stack(1))
 
     def get_class_name(self):
@@ -37,7 +38,8 @@ class Namer(object):
 
     def set_for_stack(self, caller):
         stacktrace = caller[self.frame]
-        self.MethodName = stacktrace[3]
+        if self.MethodName is None:
+            self.MethodName = stacktrace[3]
         try:
             self.ClassName = stacktrace[0].f_locals["self"].__class__.__name__
         except KeyError:
